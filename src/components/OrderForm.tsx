@@ -66,7 +66,7 @@ const OrderForm = () => {
           address_1: formData.address,
           city: formData.city,
           country: 'SA',
-          phone: formData.phone || 'غير محدد'
+          phone: formData.phone
         },
         shipping: {
           first_name: formData.name.split(' ')[0] || formData.name,
@@ -123,7 +123,7 @@ const OrderForm = () => {
     const phoneNumber = '+966550147889';
     const message = encodeURIComponent(`مرحبا، أريد طلب شيتو أراكس
 الاسم: ${formData.name}
-${formData.phone ? `الجوال: ${formData.phone}` : ''}
+الجوال: ${formData.phone}
 المدينة: ${formData.city}
 العنوان: ${formData.address}
 الكمية: ${formData.quantity}
@@ -249,7 +249,7 @@ ${formData.phone ? `الجوال: ${formData.phone}` : ''}
                     <div className="space-y-2">
                       <Label htmlFor="phone" className="font-cairo text-right block">
                         <Phone className="w-4 h-4 inline-block ml-2" />
-                        رقم الجوال (اختياري)
+                        رقم الجوال *
                       </Label>
                       <Input
                         id="phone"
@@ -258,6 +258,7 @@ ${formData.phone ? `الجوال: ${formData.phone}` : ''}
                         onChange={handleInputChange}
                         placeholder="05xxxxxxxx"
                         className="font-cairo text-right"
+                        required
                       />
                     </div>
 
