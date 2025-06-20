@@ -112,7 +112,6 @@ const Hero = () => {
               <video
                 className="relative z-10 w-full h-auto max-h-[600px] object-cover rounded-3xl shadow-2xl"
                 autoPlay
-                loop
                 playsInline
                 controls
               >
