@@ -1,7 +1,16 @@
 RewriteEngine On
 
-# Force HTTPS redirect
+# Force HTTPS redirect - Multiple methods for compatibility
+# Method 1: Standard HTTPS check
 RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Method 2: For servers behind proxy (like Cloudflare)
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Method 3: Server port check
+RewriteCond %{SERVER_PORT} 80
 RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 # Handle client-side routing for React Router
@@ -44,4 +53,4 @@ Header always set Referrer-Policy "strict-origin-when-cross-origin"
 # Allow CORS for video files
 <FilesMatch "\.(mp4|webm|ogg)$">
     Header set Access-Control-Allow-Origin "*"
-</FilesMatch> 
+</FilesMatch>
