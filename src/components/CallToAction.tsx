@@ -11,6 +11,13 @@ const CallToAction = () => {
     }
   };
 
+  const openWhatsApp = () => {
+    const phoneNumber = '+966550147889';
+    const message = encodeURIComponent('مرحبا، أريد الاستفسار عن شيتو أراكس');
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+    window.open(whatsappUrl, '_blank');
+  };
+
   return (
     <section className="py-20 bg-gradient-to-br from-chito-red via-red-600 to-orange-600 relative overflow-hidden">
       {/* Background Effects */}
@@ -87,6 +94,7 @@ const CallToAction = () => {
                 اطلب الآن - خصم ٥٠٪
               </Button>
               <Button 
+                onClick={openWhatsApp}
                 size="lg" 
                 variant="outline"
                 className="border-2 border-white text-black bg-white hover:bg-white hover:text-chito-red font-cairo font-bold text-xl px-12 py-6 rounded-2xl transition-all duration-300"

@@ -26,17 +26,80 @@ const OrderForm = () => {
     }));
   };
 
+  const createWooCommerceOrder = async (orderData: any) => {
+    const auth = btoa('ck_0e0ca75db8613bfaf0d17ecfbaae82d4ec7da0ae:cs_0c665f8bbd112c75ee50ef08991e1c32ab38c752');
+    
+    try {
+      const response = await fetch('https://nooralqmar.com/wp-json/wc/v3/orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Basic ${auth}`
+        },
+        body: JSON.stringify(orderData)
+      });
+
+      if (!response.ok) {
+        throw new Error('فشل في إنشاء الطلب');
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error('WooCommerce API Error:', error);
+      throw error;
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate order processing
-    setTimeout(() => {
+    try {
+      // Prepare WooCommerce order data
+      const orderData = {
+        payment_method: 'cod',
+        payment_method_title: 'الدفع عند الاستلام',
+        set_paid: false,
+        billing: {
+          first_name: formData.name.split(' ')[0] || formData.name,
+          last_name: formData.name.split(' ').slice(1).join(' ') || '',
+          address_1: formData.address,
+          city: formData.city,
+          country: 'SA',
+          phone: formData.phone
+        },
+        shipping: {
+          first_name: formData.name.split(' ')[0] || formData.name,
+          last_name: formData.name.split(' ').slice(1).join(' ') || '',
+          address_1: formData.address,
+          city: formData.city,
+          country: 'SA'
+        },
+        line_items: [
+          {
+            product_id: 30694,
+            quantity: formData.quantity,
+            name: 'عرض الوزن والرشاقة المثالية شيتو اراكس 1+1'
+          }
+        ],
+        shipping_lines: [
+          {
+            method_id: 'free_shipping',
+            method_title: 'شحن مجاني',
+            total: '0'
+          }
+        ]
+      };
+
+      // Create order via WooCommerce API
+      const order = await createWooCommerceOrder(orderData);
+      
       toast({
         title: "تم إرسال طلبكم بنجاح! ✅",
-        description: "سيتم التواصل معكم خلال 24 ساعة لتأكيد الطلب",
+        description: `رقم الطلب: ${order.id} - سيتم التواصل معكم خلال 24 ساعة لتأكيد الطلب`,
       });
-      setIsSubmitting(false);
+
+      // Reset form
       setFormData({
         name: '',
         phone: '',
@@ -44,11 +107,33 @@ const OrderForm = () => {
         address: '',
         quantity: 1
       });
-    }, 2000);
+
+    } catch (error) {
+      toast({
+        title: "خطأ في إرسال الطلب ❌",
+        description: "يرجى المحاولة مرة أخرى أو التواصل معنا مباشرة",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  const totalPrice = formData.quantity === 1 ? 480 : 240 * Math.ceil(formData.quantity / 2);
-  const savings = formData.quantity === 1 ? 0 : (480 * formData.quantity) - totalPrice;
+  const openWhatsApp = () => {
+    const phoneNumber = '+966550147889';
+    const message = encodeURIComponent(`مرحبا، أريد طلب شيتو أراكس
+الاسم: ${formData.name}
+الجوال: ${formData.phone}
+المدينة: ${formData.city}
+العنوان: ${formData.address}
+الكمية: ${formData.quantity}
+المبلغ الإجمالي: ${totalPrice} ريال`);
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+    window.open(whatsappUrl, '_blank');
+  };
+
+  // Fixed pricing logic: 1 = 240 SAR, 2 = 480 SAR (no discount for multiple quantities)
+  const totalPrice = formData.quantity * 240;
 
   return (
     <section id="order" className="py-20 bg-gradient-to-br from-green-50 to-emerald-50">
@@ -76,7 +161,7 @@ const OrderForm = () => {
                 <div className="space-y-4">
                   <div className="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
                     <span className="font-cairo text-lg">المنتج</span>
-                    <span className="font-cairo font-bold">شيتو أراكس</span>
+                    <span className="font-cairo font-bold">عرض الوزن والرشاقة المثالية شيتو اراكس 1+1</span>
                   </div>
                   
                   <div className="flex justify-between items-center p-4 bg-yellow-50 rounded-lg border border-yellow-200">
@@ -98,13 +183,11 @@ const OrderForm = () => {
                     </div>
                   </div>
 
-                  {formData.quantity > 1 && (
-                    <div className="bg-green-100 p-4 rounded-lg border border-green-300">
-                      <p className="text-green-800 font-cairo font-bold text-center">
-                        🎉 عرض خاص: احصل على خصم {savings} ريال!
-                      </p>
-                    </div>
-                  )}
+                  <div className="bg-green-100 p-4 rounded-lg border border-green-300">
+                    <p className="text-green-800 font-cairo font-bold text-center">
+                      🎉 عرض خاص: كل عبوة تحتوي على منتجين (1+1 مجاناً)
+                    </p>
+                  </div>
 
                   <div className="border-t pt-4">
                     <div className="flex justify-between items-center text-2xl font-cairo font-black">
@@ -193,23 +276,34 @@ const OrderForm = () => {
                     />
                   </div>
 
-                  <Button 
-                    type="submit" 
-                    disabled={isSubmitting}
-                    className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-cairo font-bold text-xl py-6 rounded-2xl transform hover:scale-105 transition-all duration-300"
-                  >
-                    {isSubmitting ? (
-                      <span className="flex items-center justify-center gap-2">
-                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                        جاري إرسال الطلب...
-                      </span>
-                    ) : (
-                      <span className="flex items-center justify-center gap-2">
-                        <ShoppingCart className="w-6 h-6" />
-                        تأكيد الطلب - {totalPrice} ريال
-                      </span>
-                    )}
-                  </Button>
+                  <div className="space-y-4">
+                    <Button 
+                      type="submit" 
+                      disabled={isSubmitting}
+                      className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-cairo font-bold text-xl py-6 rounded-2xl transform hover:scale-105 transition-all duration-300"
+                    >
+                      {isSubmitting ? (
+                        <span className="flex items-center justify-center gap-2">
+                          <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                          جاري إرسال الطلب...
+                        </span>
+                      ) : (
+                        <span className="flex items-center justify-center gap-2">
+                          <ShoppingCart className="w-6 h-6" />
+                          تأكيد الطلب - {totalPrice} ريال
+                        </span>
+                      )}
+                    </Button>
+
+                    <Button 
+                      type="button"
+                      onClick={openWhatsApp}
+                      className="w-full bg-green-600 hover:bg-green-700 text-white font-cairo font-bold text-xl py-6 rounded-2xl transform hover:scale-105 transition-all duration-300"
+                    >
+                      <Phone className="w-6 h-6 ml-2" />
+                      طلب سريع عبر واتساب
+                    </Button>
+                  </div>
 
                   <div className="text-center space-y-2 text-sm text-gray-600 font-cairo">
                     <p>✅ توصيل مجاني لجميع أنحاء المملكة</p>
