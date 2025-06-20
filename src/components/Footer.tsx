@@ -45,7 +45,7 @@ const Footer = () => {
                 <Clock className="w-5 h-5 text-chito-gold" />
                 <div className="font-cairo">
                   <p>السبت - الخميس</p>
-                  <p className="text-gray-300">٩:٠٠ ص - ٦:٠٠ م</p>
+                  <p className="text-gray-300">٩:٠٠ ص - ١٢:٠٠ م</p>
                 </div>
               </div>
             </div>
