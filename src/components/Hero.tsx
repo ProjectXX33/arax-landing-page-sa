@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Star, CheckCircle, Zap, ShoppingCart } from 'lucide-react';
@@ -106,15 +105,20 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* Product Image */}
+          {/* Product Video */}
           <div className="flex justify-center lg:justify-start">
-            <div className="relative">
-              <div className="absolute inset-0 bg-yellow-400/20 rounded-full blur-3xl transform scale-110"></div>
-              <img 
-                src="/lovable-uploads/c771557b-5c3f-43a5-8488-c7a0128a01fa.png"
-                alt="شيتو أراكس - منتج فقدان الوزن"
-                className="relative z-10 max-w-full h-auto max-h-[600px] object-contain animate-bounce-slow"
-              />
+            <div className="relative max-w-lg w-full">
+              <div className="absolute inset-0 bg-yellow-400/20 rounded-3xl blur-3xl transform scale-110"></div>
+              <video
+                className="relative z-10 w-full h-auto max-h-[600px] object-cover rounded-3xl shadow-2xl"
+                autoPlay
+                loop
+                playsInline
+                controls
+              >
+                <source src="/cheto.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
             </div>
           </div>
         </div>
