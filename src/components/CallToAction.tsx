@@ -89,7 +89,7 @@ const CallToAction = () => {
               <Button 
                 size="lg" 
                 variant="outline"
-                className="border-2 border-white text-white hover:bg-white font-cairo font-bold text-xl px-12 py-6 rounded-2xl transition-all duration-300"
+                className="border-2 border-white text-black bg-white hover:bg-white hover:text-chito-red font-cairo font-bold text-xl px-12 py-6 rounded-2xl transition-all duration-300"
               >
                 <Phone className="w-6 h-6 ml-2" />
                 اتصل بنا الآن
