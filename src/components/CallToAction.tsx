@@ -4,6 +4,13 @@ import { Button } from '@/components/ui/button';
 import { Phone, ShoppingCart, Clock, Gift } from 'lucide-react';
 
 const CallToAction = () => {
+  const scrollToOrder = () => {
+    const orderSection = document.getElementById('order');
+    if (orderSection) {
+      orderSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section className="py-20 bg-gradient-to-br from-chito-red via-red-600 to-orange-600 relative overflow-hidden">
       {/* Background Effects */}
@@ -72,6 +79,7 @@ const CallToAction = () => {
           <div className="space-y-6">
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 
+                onClick={scrollToOrder}
                 size="lg" 
                 className="bg-yellow-400 hover:bg-yellow-500 text-black font-cairo font-bold text-xl px-12 py-6 rounded-2xl shadow-2xl transform hover:scale-105 transition-all duration-300"
               >

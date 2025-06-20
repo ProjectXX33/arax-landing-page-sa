@@ -1,9 +1,16 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Star, CheckCircle, Zap } from 'lucide-react';
+import { Star, CheckCircle, Zap, ShoppingCart } from 'lucide-react';
 
 const Hero = () => {
+  const scrollToOrder = () => {
+    const orderSection = document.getElementById('order');
+    if (orderSection) {
+      orderSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section className="relative min-h-screen bg-gradient-to-br from-red-600 via-red-500 to-orange-500 overflow-hidden">
       {/* Background Effects */}
@@ -25,6 +32,9 @@ const Hero = () => {
                 </span>
               </h1>
               <p className="text-xl lg:text-2xl text-white/90 font-cairo font-medium">
+                مكمل غذائي طبيعي لفقدان الوزن والرشاقة المثالية
+              </p>
+              <p className="text-lg text-white/80 font-cairo">
                 اشتري عبوة واحصل على الثانية مجاناً
               </p>
             </div>
@@ -70,15 +80,26 @@ const Hero = () => {
               </div>
             </div>
 
-            {/* CTA Button */}
+            {/* CTA Buttons */}
             <div className="space-y-4">
-              <Button 
-                size="lg" 
-                className="bg-yellow-400 hover:bg-yellow-500 text-black font-cairo font-bold text-xl px-12 py-6 rounded-2xl shadow-2xl transform hover:scale-105 transition-all duration-300 w-full lg:w-auto"
-              >
-                <Zap className="w-6 h-6 ml-2" />
-                اطلب الآن - عرض محدود!
-              </Button>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                <Button 
+                  onClick={scrollToOrder}
+                  size="lg" 
+                  className="bg-yellow-400 hover:bg-yellow-500 text-black font-cairo font-bold text-xl px-12 py-6 rounded-2xl shadow-2xl transform hover:scale-105 transition-all duration-300"
+                >
+                  <ShoppingCart className="w-6 h-6 ml-2" />
+                  اطلب الآن - خصم ٥٠٪
+                </Button>
+                <Button 
+                  onClick={scrollToOrder}
+                  size="lg" 
+                  className="bg-green-500 hover:bg-green-600 text-white font-cairo font-bold text-xl px-12 py-6 rounded-2xl shadow-2xl transform hover:scale-105 transition-all duration-300"
+                >
+                  <Zap className="w-6 h-6 ml-2" />
+                  طلب سريع
+                </Button>
+              </div>
               <p className="text-white/80 text-sm font-cairo">
                 ⏳ العرض لفترة محدودة - لا تفوت الفرصة!
               </p>
