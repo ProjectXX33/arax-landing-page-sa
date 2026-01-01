@@ -72,7 +72,7 @@ const CallToAction = () => {
                 </div>
                 <div className="flex items-center gap-3 text-white">
                   <ShoppingCart className="w-6 h-6 text-yellow-300" />
-                  <span className="font-cairo text-lg">توصيل مجاني</span>
+                  <span className="font-cairo text-lg">رسوم الشحن: ١٠ ريال</span>
                 </div>
                 <div className="flex items-center gap-3 text-white">
                   <Phone className="w-6 h-6 text-yellow-300" />

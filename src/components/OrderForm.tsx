@@ -84,9 +84,9 @@ const OrderForm = () => {
         ],
         shipping_lines: [
           {
-            method_id: 'free_shipping',
-            method_title: 'شحن مجاني',
-            total: '0'
+            method_id: 'flat_rate',
+            method_title: 'رسوم الشحن',
+            total: '10'
           }
         ]
       };
@@ -133,7 +133,10 @@ const OrderForm = () => {
   };
 
   // Fixed pricing logic: 1 = 120 SAR, 2 = 240 SAR (no discount for multiple quantities)
-  const totalPrice = formData.quantity * 120;
+  // Shipping fee: 10 SAR
+  const shippingFee = 10;
+  const subtotal = formData.quantity * 120;
+  const totalPrice = subtotal + shippingFee;
 
   return (
     <section id="order" className="py-20 bg-gradient-to-br from-green-50 to-emerald-50">
@@ -144,7 +147,7 @@ const OrderForm = () => {
               اطلب شيتو أراكس الآن
             </h2>
             <p className="text-xl text-gray-600 font-cairo">
-              احصل على خصم ٥٠٪ واستمتع بتوصيل مجاني لجميع أنحاء المملكة
+              احصل على خصم ٥٠٪ مع توصيل لجميع أنحاء المملكة
             </p>
           </div>
 
@@ -205,14 +208,19 @@ const OrderForm = () => {
                       </p>
                     </div>
 
-                    <div className="border-t pt-4">
-                      <div className="flex justify-between items-center text-2xl font-cairo font-black">
+                    <div className="border-t pt-4 space-y-2">
+                      <div className="flex justify-between items-center text-lg font-cairo">
+                        <span>المجموع الفرعي</span>
+                        <span className="text-gray-700">{subtotal} ريال</span>
+                      </div>
+                      <div className="flex justify-between items-center text-lg font-cairo">
+                        <span>رسوم الشحن</span>
+                        <span className="text-gray-700">{shippingFee} ريال</span>
+                      </div>
+                      <div className="flex justify-between items-center text-2xl font-cairo font-black pt-2 border-t">
                         <span>المجموع الكلي</span>
                         <span className="text-green-600">{totalPrice} ريال</span>
                       </div>
-                      <p className="text-sm text-gray-600 font-cairo mt-2 text-center">
-                        شامل التوصيل المجاني
-                      </p>
                     </div>
                   </div>
                 </CardContent>
@@ -324,7 +332,7 @@ const OrderForm = () => {
                     </div>
 
                     <div className="text-center space-y-2 text-sm text-gray-600 font-cairo">
-                      <p>✅ توصيل مجاني لجميع أنحاء المملكة</p>
+                      <p>✅ رسوم الشحن: ١٠ ريال</p>
                       <p>✅ الدفع عند الاستلام</p>
                       <p>✅ ضمان استرداد الأموال</p>
                     </div>

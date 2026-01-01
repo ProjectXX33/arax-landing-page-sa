@@ -15,11 +15,11 @@ const Index = () => {
     <div className="min-h-screen font-cairo" dir="rtl">
       <Header />
       <Hero />
+      <OrderForm />
       <Features />
       <BenefitsSection />
       <IngredientsSection />
       <ProductDetails />
-      <OrderForm />
       <FAQSection />
       <CallToAction />
       <Footer />
