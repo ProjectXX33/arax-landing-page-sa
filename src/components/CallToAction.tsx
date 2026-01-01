@@ -51,15 +51,15 @@ const CallToAction = () => {
                 <div className="space-y-4">
                   <div className="bg-yellow-400 text-black px-6 py-4 rounded-2xl">
                     <p className="text-2xl lg:text-3xl font-cairo font-black">
-                      ١ + ١ مجاناً
+                      خصم ٥٠٪
                     </p>
                     <p className="text-lg font-cairo">
-                      بدلاً من ٤٨٠ ريال
+                      بدلاً من ٢٤٠ ريال
                     </p>
                   </div>
                   <div className="bg-green-500 text-white px-6 py-4 rounded-2xl">
                     <p className="text-3xl lg:text-4xl font-cairo font-black">
-                      ٢٤٠ ريال فقط
+                      ١٢٠ ريال فقط
                     </p>
                   </div>
                 </div>

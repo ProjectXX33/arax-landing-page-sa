@@ -77,9 +77,9 @@ const OrderForm = () => {
         },
         line_items: [
           {
-            product_id: 30694,
+            product_id: 28565,
             quantity: formData.quantity,
-            name: 'عرض الوزن والرشاقة المثالية شيتو اراكس 1+1'
+            name: 'عرض الوزن والرشاقة المثالية شيتو اراكس - خصم ٥٠٪'
           }
         ],
         shipping_lines: [
@@ -132,8 +132,8 @@ const OrderForm = () => {
     window.open(whatsappUrl, '_blank');
   };
 
-  // Fixed pricing logic: 1 = 240 SAR, 2 = 480 SAR (no discount for multiple quantities)
-  const totalPrice = formData.quantity * 240;
+  // Fixed pricing logic: 1 = 120 SAR, 2 = 240 SAR (no discount for multiple quantities)
+  const totalPrice = formData.quantity * 120;
 
   return (
     <section id="order" className="py-20 bg-gradient-to-br from-green-50 to-emerald-50">
@@ -144,7 +144,7 @@ const OrderForm = () => {
               اطلب شيتو أراكس الآن
             </h2>
             <p className="text-xl text-gray-600 font-cairo">
-              احصل على عرض 1+1 مجاناً واستمتع بتوصيل مجاني لجميع أنحاء المملكة
+              احصل على خصم ٥٠٪ واستمتع بتوصيل مجاني لجميع أنحاء المملكة
             </p>
           </div>
 
@@ -177,7 +177,7 @@ const OrderForm = () => {
                   <div className="space-y-4">
                     <div className="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
                       <span className="font-cairo text-lg">المنتج</span>
-                      <span className="font-cairo font-bold">عرض الوزن والرشاقة المثالية شيتو اراكس 1+1</span>
+                      <span className="font-cairo font-bold">عرض الوزن والرشاقة المثالية شيتو اراكس - خصم ٥٠٪</span>
                     </div>
                     
                     <div className="flex justify-between items-center p-4 bg-yellow-50 rounded-lg border border-yellow-200">
@@ -201,7 +201,7 @@ const OrderForm = () => {
 
                     <div className="bg-green-100 p-4 rounded-lg border border-green-300">
                       <p className="text-green-800 font-cairo font-bold text-center">
-                        🎉 عرض خاص: كل عبوة تحتوي على منتجين (1+1 مجاناً)
+                        🎉 عرض خاص: خصم ٥٠٪ على جميع المنتجات
                       </p>
                     </div>
 
